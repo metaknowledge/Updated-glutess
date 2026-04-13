@@ -53,9 +53,10 @@ int main()
       printf("\n");
     }
     printf("\n trinagles:\n");
-    for (int i = 0; i < indexs.size() / 3; i += 3) {
-      printf("")
+    for (int i = 0; i < indexs.size(); i += 3) {
+      printf("[%i, %i, %i]", indexs[i], indexs[i+1], indexs[i+2]);
     }
+    printf("\n");
   
   // Here's a basic means of rendering the triangles and their outlines ...
   
