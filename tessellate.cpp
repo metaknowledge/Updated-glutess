@@ -24,7 +24,6 @@ struct TessContext_s {
 
 struct TessContext_s *new_tess_context(std::vector<float> *tripoints, std::vector<std::vector<float>> *edges, std::vector<float> *line, float z, std::vector<int> *indexs, std::vector<float> *verts)
 {
-    // struct TessContext_s *result = (struct TessContext_s *)malloc(sizeof (struct TessContext_s));
     struct TessContext_s *result = new TessContext_s;
     result->tripoints = tripoints;
     result->edges = edges;
@@ -39,7 +38,6 @@ struct TessContext_s *new_tess_context(std::vector<float> *tripoints, std::vecto
 
 struct Vertex_s *new_vertex(struct TessContext_s *ctx, double x, double y, double z)
 {
-    // struct Vertex_s *result = (struct Vertex_s *)malloc(sizeof(struct Vertex_s));
     struct Vertex_s *result = new Vertex_s;
     result->pt[0] = x;
     result->pt[1] = y;
@@ -66,7 +64,6 @@ void cb_line_loop(struct Vertex_s *v, struct TessContext_s *ctx)
 {
     ctx->line->push_back(v->pt[0]); 
     ctx->line->push_back(v->pt[1]);
-    // ctx->line->push_back(v->index);
 }
 
 void cb_vertex(void *vertex_data, void *poly_data)
@@ -100,7 +97,6 @@ void cb_edgeFlag(bool flag)
 }
 
 ///// --- Main tesselate function --------------------------------------------------------------------------------------------
-
 std::vector<float> tessellate (std::vector<std::vector<float>> *contours_in, std::vector<float> *tris_out, std::vector<std::vector<float>> *edges, std::vector<int> *indexs, bool getBounds, float z)
 {
     if (contours_in == NULL) return {};
