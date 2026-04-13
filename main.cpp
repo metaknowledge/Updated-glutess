@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
+#include <cstdint>
 
 std::vector<float> createContour(std::string vals) {
     std::vector<float> fvals;
@@ -10,6 +11,11 @@ std::vector<float> createContour(std::string vals) {
     while (ss >> f) fvals.push_back(f);
     return fvals;
 }
+
+struct pt {
+  float x;
+  float y;
+} pt;
 
 int main()
 {
@@ -23,16 +29,33 @@ int main()
   //Tessellate the contours into triangles and store the results in 'tris' array ...
 	
     std::vector<float> tris;  /* store triangles in tris array - each triangle is 9 floats (3x XYZ) */
-    tessellate(&contours, &tris, NULL, false);
+    std::vector<int> indexs;
+    std::vector<float> verts = tessellate(&contours, &tris, NULL, &indexs, false);
   
-    std::vector<std::vector<float>> edges;
-    tessellate(&contours, NULL, &edges, true);	//Get outer edges with corrected windings etc..
+    // std::vector<std::vector<float>> edges;
+    // tessellate(&contours, NULL, &edges, NULL, true);	//Get outer edges with corrected windings etc..
 	
-  // Setup for rendering ...
+    printf("\ncontours:\n");
+
   
-    uint32_t vc = tris.size() / 3;
-    std::vector<GLshort> lindexes;
-    for (size_t i = 0; i < tris.size(); i++) lindexes.push_back(i);
+    // uint32_t vc = tris.size() / 3;
+    // std::vector<short> lindexes;
+    // for (size_t i = 0; i < tris.size(); i++) lindexes.push_back(i);
+    std::vector<struct pt> pts;
+    for (auto vec : contours) {
+      for (int i = 0; i < vec.size(); i += 2) {
+        struct pt point;
+        point.x = vec[i];
+        point.y = vec[i+1];
+        pts.push_back(point);
+        printf("(%0.2f, %0.2f)", point.x, point.y);
+      }
+      printf("\n");
+    }
+    printf("\n trinagles:\n");
+    for (int i = 0; i < indexs.size() / 3; i += 3) {
+      printf("")
+    }
   
   // Here's a basic means of rendering the triangles and their outlines ...
   
